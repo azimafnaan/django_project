@@ -29,3 +29,16 @@ def add_product(request):
     form=ProductsForm()
     context={'form':form}
     return render(request,'my_app/add_product.html',context)
+
+def user_creation_form(request):
+    if request.method=='POST':
+        form=UserForm(request.POST)
+        password= request.POST.get('password')
+        username= request.POST.get('username')
+        print(password)
+        if form.is_valid():
+            user=User.objects.create_user(username=username, password=password)
+            return HttpResponse("Successfully Signed Up")
+    form = UserForm()
+    context={'form':form}
+    return render(request,'my_app/singup.html',context)
